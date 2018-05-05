@@ -3,4 +3,4 @@ BUILDROOT/*
 RPMS/*
 SPECS/*
 SRPMS/*
-broadcom-bt-firmware*.tar.gz
+openssl*.tar.gz
