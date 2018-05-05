@@ -1,0 +1,33 @@
+diff -ruN orig/apps/CA.pl.in new/apps/CA.pl.in
+--- orig/apps/CA.pl.in	2018-03-27 07:50:37.000000000 -0600
++++ new/apps/CA.pl.in	2018-05-05 14:27:26.939086829 -0600
+@@ -33,7 +33,7 @@
+ my $PKCS12 = "$openssl pkcs12";
+ 
+ # default openssl.cnf file has setup as per the following
+-my $CATOP = "./demoCA";
++my $CATOP = "/etc/openssl-freeworld";
+ my $CAKEY = "cakey.pem";
+ my $CAREQ = "careq.pem";
+ my $CACERT = "cacert.pem";
+diff -ruN orig/apps/openssl.cnf new/apps/openssl.cnf
+--- orig/apps/openssl.cnf	2018-03-27 07:50:37.000000000 -0600
++++ new/apps/openssl.cnf	2018-05-05 14:29:30.578301885 -0600
+@@ -39,7 +39,7 @@
+ ####################################################################
+ [ CA_default ]
+ 
+-dir		= ./demoCA		# Where everything is kept
++dir		= /etc/openssl-freeworld		# Where everything is kept
+ certs		= $dir/certs		# Where the issued certs are kept
+ crl_dir		= $dir/crl		# Where the issued crl are kept
+ database	= $dir/index.txt	# database index file.
+@@ -323,7 +323,7 @@
+ [ tsa_config1 ]
+ 
+ # These are used by the TSA reply generation only.
+-dir		= ./demoCA		# TSA root directory
++dir		= /etc/openssl-freeworld		# TSA root directory
+ serial		= $dir/tsaserial	# The current serial number (mandatory)
+ crypto_device	= builtin		# OpenSSL engine to use for signing
+ signer_cert	= $dir/tsacert.pem 	# The TSA signing certificate
