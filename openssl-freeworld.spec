@@ -86,10 +86,11 @@ protocols.
 
 %build
 	./Configure --prefix=/opt/%{name} --openssldir=/etc/%{name} --libdir=%{_lib}/%{name} \
-		shared no-ssl3-method enable-ec_nistp_64_gcc_128 zlib-dynamic \
+		shared enable-ssl3-method enable-ssl3 enable-ec_nistp_64_gcc_128 zlib-dynamic \
 		linux-x86_64 enable-md2 enable-camellia \
                 enable-seed enable-rfc3779 \
-	        enable-cms enable-rc5 \
+	        enable-cms enable-rc5 enable-weak-ssl-ciphers \
+                enable-sctp \
 		"-Wa,--noexecstack ${CPPFLAGS} ${CFLAGS} ${LDFLAGS}"
 
 	make depend
@@ -115,15 +116,15 @@ touch %{buildroot}/%{_libdir}/%{name}/engines-%{soversion}/padlock.so
 chmod 755 %{buildroot}/%{_libdir}/%{name}/engines-%{soversion}/padlock.so
 
 # Install profile and ld.so.config files
-install -Dm755 %{S:1} "%{buildroot}/etc/profile.d/%{name}.sh"
-install -Dm644 %{S:2} "%{buildroot}/etc/ld.so.conf.d/%{name}.conf"
+#install -Dm755 %{S:1} "%{buildroot}/etc/profile.d/%{name}.sh"
+#install -Dm644 %{S:2} "%{buildroot}/etc/ld.so.conf.d/%{name}.conf"
 
 %files
 %license LICENSE
 %{opt_openssl}/bin/
 %{_sysconfdir}/%{name}/
 %{_mandir}/%{name}
-%{_sysconfdir}/profile.d/%{name}.sh
+#{_sysconfdir}/profile.d/{name}.sh
 
 %files libs
 %{opt_openssl}/%{_lib}/%{name}/libcrypto.so.%{soversion}
@@ -134,7 +135,7 @@ install -Dm644 %{S:2} "%{buildroot}/etc/ld.so.conf.d/%{name}.conf"
 %ghost %{_libdir}/%{name}/engines-%{soversion}/afalg.so
 %ghost %{_libdir}/%{name}/engines-%{soversion}/capi.so
 %ghost %{_libdir}/%{name}/engines-%{soversion}/padlock.so
-%{_sysconfdir}/ld.so.conf.d/%{name}.conf
+#{_sysconfdir}/ld.so.conf.d/{name}.conf
 
 %files static
 %{opt_openssl}/%{_lib}/%{name}/*.a
