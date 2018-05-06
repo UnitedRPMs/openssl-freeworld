@@ -81,14 +81,15 @@ package contains static libraries needed for static linking of
 applications which support various cryptographic algorithms and
 protocols.
 
-
 %prep
 %autosetup -n openssl-%{version} -p 1
 
 %build
 	./Configure --prefix=/opt/%{name} --openssldir=/etc/%{name} --libdir=%{_lib}/%{name} \
 		shared no-ssl3-method enable-ec_nistp_64_gcc_128 zlib-dynamic \
-		linux-x86_64 \
+		linux-x86_64 enable-md2 enable-camellia \
+                enable-seed enable-rfc3779 \
+	        enable-cms enable-rc5 \
 		"-Wa,--noexecstack ${CPPFLAGS} ${CFLAGS} ${LDFLAGS}"
 
 	make depend
