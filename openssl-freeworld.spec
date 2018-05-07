@@ -156,3 +156,6 @@ ln -sf %{opt_openssl}/%{_lib}/%{name}/padlock.so %{_libdir}/%{name}/engines-%{so
 %postun libs -p /sbin/ldconfig
 
 %changelog
+
+* Sat May 05 2018 - David Va <davidva AT tutanota DOT com> 1.1.0h-1
+- Initial build
