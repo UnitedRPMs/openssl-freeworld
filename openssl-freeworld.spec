@@ -19,7 +19,7 @@
 
 Summary: Utilities from the general purpose cryptography library with TLS implementation
 Name: openssl-freeworld
-Version: 1.1.0h
+Version: 1.1.1c
 Release: 1%{?dist}
 
 Source: https://www.openssl.org/source/openssl-%{version}.tar.gz
@@ -156,6 +156,9 @@ ln -sf %{opt_openssl}/%{_lib}/%{name}/padlock.so %{_libdir}/%{name}/engines-%{so
 %postun libs -p /sbin/ldconfig
 
 %changelog
+
+* Wed Jun 05 2019 - David Va <davidva AT tutanota DOT com> 1.1.1c-1
+- Updated to 1.1.1c
 
 * Sat May 05 2018 - David Va <davidva AT tutanota DOT com> 1.1.0h-1
 - Initial build

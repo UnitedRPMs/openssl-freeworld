@@ -3,4 +3,5 @@ BUILDROOT/*
 RPMS/*
 SPECS/*
 SRPMS/*
-openssl*.tar.gz
+*.tar.gz
+*.rpm
