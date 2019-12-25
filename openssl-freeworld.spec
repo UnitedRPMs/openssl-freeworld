@@ -19,8 +19,8 @@
 
 Summary: Utilities from the general purpose cryptography library with TLS implementation
 Name: openssl-freeworld
-Version: 1.1.1c
-Release: 2%{?dist}
+Version: 1.1.1d
+Release: 1%{?dist}
 
 Source: https://www.openssl.org/source/openssl-%{version}.tar.gz
 Source1: %{name}.sh
@@ -139,6 +139,9 @@ ln -sf ../../../..%{opt_openssl}/%{_lib}/%{name}/engines-%{soversion}/padlock.so
 %postun libs -p /sbin/ldconfig
 
 %changelog
+* Wed Dec 25 2019 Sérgio Basto <sergio@serjux.com> - 1.1.1d-1
+- Update to 1.1.1d release
+
 * Tue Dec 24 2019 Sérgio Basto <sergio@serjux.com> - 1.1.1c-2
 - Without ghost files and symlinks on pre install (of wrong package)
 
