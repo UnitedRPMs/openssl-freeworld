@@ -20,7 +20,7 @@
 Summary: Utilities from the general purpose cryptography library with TLS implementation
 Name: openssl-freeworld
 Version: 1.1.1c
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 Source: https://www.openssl.org/source/openssl-%{version}.tar.gz
 Source1: %{name}.sh
@@ -100,21 +100,11 @@ protocols.
 make DESTDIR=%{buildroot} MANDIR=/usr/share/man/%{name} MANSUFFIX=%{name} install_sw install_ssldirs install_man_docs
 
 mkdir -p %{buildroot}/%{_libdir}/%{name}/engines-%{soversion}/
-touch %{buildroot}/%{_libdir}/%{name}/libcrypto.so.%{soversion}
-chmod 755 %{buildroot}/%{_libdir}/%{name}/libcrypto.so.%{soversion}
-
-touch %{buildroot}/%{_libdir}/%{name}/libssl.so.%{soversion}
-chmod 755 %{buildroot}/%{_libdir}/%{name}/libssl.so.%{soversion}
-
-touch %{buildroot}/%{_libdir}/%{name}/engines-%{soversion}/afalg.so
-chmod 755 %{buildroot}/%{_libdir}/%{name}/engines-%{soversion}/afalg.so
-
-touch %{buildroot}/%{_libdir}/%{name}/engines-%{soversion}/capi.so
-chmod 755 %{buildroot}/%{_libdir}/%{name}/engines-%{soversion}/capi.so
-
-touch %{buildroot}/%{_libdir}/%{name}/engines-%{soversion}/padlock.so
-chmod 755 %{buildroot}/%{_libdir}/%{name}/engines-%{soversion}/padlock.so
-
+ln -sf ../../..%{opt_openssl}/%{_lib}/%{name}/libcrypto.so.%{soversion} %{buildroot}%{_libdir}/%{name}/libcrypto.so.%{soversion}
+ln -sf ../../..%{opt_openssl}/%{_lib}/%{name}/libssl.so.%{soversion} %{buildroot}%{_libdir}/%{name}/libssl.so.%{soversion}
+ln -sf ../../../..%{opt_openssl}/%{_lib}/%{name}/engines-%{soversion}/afalg.so %{buildroot}%{_libdir}/%{name}/engines-%{soversion}/afalg.so
+ln -sf ../../../..%{opt_openssl}/%{_lib}/%{name}/engines-%{soversion}/capi.so %{buildroot}%{_libdir}/%{name}/engines-%{soversion}/capi.so
+ln -sf ../../../..%{opt_openssl}/%{_lib}/%{name}/engines-%{soversion}/padlock.so %{buildroot}%{_libdir}/%{name}/engines-%{soversion}/padlock.so
 # Install profile and ld.so.config files
 #install -Dm755 %{S:1} "%{buildroot}/etc/profile.d/%{name}.sh"
 #install -Dm644 %{S:2} "%{buildroot}/etc/ld.so.conf.d/%{name}.conf"
@@ -130,11 +120,11 @@ chmod 755 %{buildroot}/%{_libdir}/%{name}/engines-%{soversion}/padlock.so
 %{opt_openssl}/%{_lib}/%{name}/libcrypto.so.%{soversion}
 %{opt_openssl}/%{_lib}/%{name}/libssl.so.%{soversion}
 %{opt_openssl}/%{_lib}/%{name}/engines-%{soversion}/*.so
-%ghost %{_libdir}/%{name}/libcrypto.so.%{soversion}
-%ghost %{_libdir}/%{name}/libssl.so.%{soversion}
-%ghost %{_libdir}/%{name}/engines-%{soversion}/afalg.so
-%ghost %{_libdir}/%{name}/engines-%{soversion}/capi.so
-%ghost %{_libdir}/%{name}/engines-%{soversion}/padlock.so
+%{_libdir}/%{name}/libcrypto.so.%{soversion}
+%{_libdir}/%{name}/libssl.so.%{soversion}
+%{_libdir}/%{name}/engines-%{soversion}/afalg.so
+%{_libdir}/%{name}/engines-%{soversion}/capi.so
+%{_libdir}/%{name}/engines-%{soversion}/padlock.so
 #{_sysconfdir}/ld.so.conf.d/{name}.conf
 
 %files static
@@ -145,17 +135,13 @@ chmod 755 %{buildroot}/%{_libdir}/%{name}/engines-%{soversion}/padlock.so
 %{opt_openssl}/%{_lib}/%{name}/pkgconfig/
 %{opt_openssl}/include/openssl/
 
-%pre
-ln -sf %{opt_openssl}/%{_lib}/%{name}/libcrypto.so.%{soversion} %{_libdir}/%{name}/libcrypto.so.%{soversion}
-ln -sf %{opt_openssl}/%{_lib}/%{name}/libssl.so.%{soversion} %{_libdir}/%{name}/libssl.so.%{soversion}
-ln -sf %{opt_openssl}/%{_lib}/%{name}/afalg.so %{_libdir}/%{name}/engines-%{soversion}/afalg.so
-ln -sf %{opt_openssl}/%{_lib}/%{name}/capi.so %{_libdir}/%{name}/engines-%{soversion}/capi.so
-ln -sf %{opt_openssl}/%{_lib}/%{name}/padlock.so %{_libdir}/%{name}/engines-%{soversion}/padlock.so
-
 %post libs -p /sbin/ldconfig
 %postun libs -p /sbin/ldconfig
 
 %changelog
+* Tue Dec 24 2019 Sérgio Basto <sergio@serjux.com> - 1.1.1c-2
+- Without ghost files and symlinks on pre install (of wrong package)
+
 
 * Wed Jun 05 2019 - David Va <davidva AT tutanota DOT com> 1.1.1c-1
 - Updated to 1.1.1c
