@@ -38,6 +38,7 @@ BuildRequires: /usr/bin/pod2man
 BuildRequires: perl(Test::Harness), perl(Test::More), perl(Math::BigInt)
 BuildRequires: perl(Module::Load::Conditional), perl(File::Temp)
 BuildRequires: perl(Time::HiRes)
+BuildRequires: perl(FindBin), perl(lib), perl(File::Compare), perl(File::Copy)
 Requires: coreutils
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 
